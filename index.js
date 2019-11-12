@@ -1,22 +1,50 @@
-//Load express module with `require` directive
-var express = require('express')
-var app = express()
+'use strict'
+const Hapi = require('hapi');
 
-//Define request response in root URL (/)
-app.get('/', function (req, res) {
-  res.send('Hello World!')
+const init = async () => {
+    const server =  Hapi.server({
+        host: 'localhost',
+        port: 3000
+    })
+
+    server.route({
+        method:'GET',
+        path:'/',
+        handler: (req, h) => {
+            return 'HELLO JAM!!';
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path:'/about',
+        handler: (req, h) => {
+            return "IM ABOUT PAGE";
+        }
+    })
+
+    server.route({
+        method: 'GET',
+        path: '/user/{name}/{surname}',
+        handler: (req, h) => {
+            console.log(req.params);
+            console.log("I DISPLAYED THE REQUEST")
+            console.log("I DISPLAYED THE REQUEST")
+            console.log("I DISPLAYED THE REQUEST")
+            console.log("I DISPLAYED THE REQUEST")
+            console.log("I DISPLAYED THE REQUEST")
+            return "I did display the requestor " + req.params.name;
+        }
+    })
+
+    await server.start();
+    console.log('I was changed!!!');
+    console.log('server is running on port %s', server.info.uri);
+};
+
+process.on('unhandledRejection', (err) => {
+    console.log(err)
+    process.exit(1);
 })
 
-app.get('/helloAgain', function (req, res) {
-  res.send('Im from the second port!')
-})
-
-app.get('/helloAgain/:name', function (req, res) {
-  // console.log(req.params.name)
-  res.send('HI '+ req.params.name);
-})
-
-//Launch listening server on port 8081
-app.listen(8081, function () {
-  console.log('app listening on port 8081!')
-})
+init();
