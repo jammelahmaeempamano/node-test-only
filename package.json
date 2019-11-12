@@ -1,14 +1,17 @@
 {
-  "name": "docker-test-on-express",
+  "name": "circleci-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "Local test code for Github and CircleCI integration",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "hapi": "^18.1.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
   }
 }
